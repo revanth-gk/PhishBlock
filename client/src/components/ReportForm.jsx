@@ -7,9 +7,22 @@ export default function ReportForm({ onSubmit }) {
   const [content, setContent] = useState('');
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!content) {
+      newErrors.content = type === 'url' ? 'URL is required' : 'Wallet address is required';
+    } else if (type === 'url' && !/^hxxps?:\/\//.test(content)) {
+      newErrors.content = 'URL must start with hxxp:// or hxxps://';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
     setSubmitting(true);
     try {
       const response = await fetch(`${API_BASE}/submit`, {
@@ -27,6 +40,7 @@ export default function ReportForm({ onSubmit }) {
         alert('✅ Report submitted successfully!');
         setContent('');
         setNotes('');
+        setErrors({});
         onSubmit();
       } else {
         alert('❌ Error: ' + data.error);
@@ -79,10 +93,13 @@ export default function ReportForm({ onSubmit }) {
               type="text"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full px-4 py-3 bg-gray-700 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none transition"
+              className={`w-full px-4 py-3 bg-gray-700 rounded-lg border ${
+                errors.content ? 'border-red-500' : 'border-gray-600'
+              } focus:border-blue-500 focus:outline-none transition`}
               placeholder={type === 'url' ? 'hxxps://phishing-site.com' : '0x1234...abcd'}
               required
             />
+            {errors.content && <p className="text-sm text-red-500 mt-2">{errors.content}</p>}
             <p className="text-sm text-gray-400 mt-2">
               {type === 'url' ? 'Tip: Replace http with hxxp to defang the URL' : 'Provide the full wallet address'}
             </p>

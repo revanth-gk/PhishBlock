@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function Dashboard({ stats }) {
   if (!stats) {
     return (
@@ -14,29 +16,16 @@ export default function Dashboard({ stats }) {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border border-gray-700 shadow-xl">
-          <div className="text-4xl mb-3">📊</div>
-          <div className="text-4xl font-bold text-white mb-1">{stats.totalReports}</div>
-          <div className="text-gray-400 font-medium">Total Reports</div>
-        </div>
-
-        <div className="bg-gradient-to-br from-green-900 to-green-950 rounded-lg p-6 border border-green-800 shadow-xl">
-          <div className="text-4xl mb-3">✅</div>
-          <div className="text-4xl font-bold text-green-300 mb-1">{stats.verified}</div>
-          <div className="text-green-200 font-medium">Verified Threats</div>
-        </div>
-
-        <div className="bg-gradient-to-br from-yellow-900 to-yellow-950 rounded-lg p-6 border border-yellow-800 shadow-xl">
-          <div className="text-4xl mb-3">⏳</div>
-          <div className="text-4xl font-bold text-yellow-300 mb-1">{stats.pending}</div>
-          <div className="text-yellow-200 font-medium">Pending Review</div>
-        </div>
-
-        <div className="bg-gradient-to-br from-red-900 to-red-950 rounded-lg p-6 border border-red-800 shadow-xl">
-          <div className="text-4xl mb-3">⚠️</div>
-          <div className="text-4xl font-bold text-red-300 mb-1">{stats.disputed}</div>
-          <div className="text-red-200 font-medium">Disputed</div>
-        </div>
+        {Object.entries(stats).map(([key, value]) => (
+          <div
+            key={key}
+            className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border border-gray-700 shadow-xl"
+          >
+            <div className="text-4xl mb-3">📊</div>
+            <div className="text-4xl font-bold text-white mb-1">{value}</div>
+            <div className="text-gray-400 font-medium">{key}</div>
+          </div>
+        ))}
       </div>
 
       {/* Top Reporters */}
@@ -52,8 +41,8 @@ export default function Dashboard({ stats }) {
         <div className="space-y-3">
           {stats.topReporters && stats.topReporters.length > 0 ? (
             stats.topReporters.map((reporter, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="flex items-center justify-between p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition"
               >
                 <div className="flex items-center gap-4">
