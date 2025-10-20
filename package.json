@@ -1,0 +1,26 @@
+{
+  "name": "phishblock",
+  "version": "1.0.0",
+  "description": "Decentralized crowdsourced phishing and scam reporting platform",
+  "main": "server.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "nodemon server.js",
+    "dev:client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "@supabase/supabase-js": "^2.38.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "concurrently": "^8.2.0"
+  },
+  "keywords": ["phishing", "security", "crowdsourced", "blockchain", "threat-intelligence"],
+  "author": "PhishBlock Community",
+  "license": "MIT"
+}
