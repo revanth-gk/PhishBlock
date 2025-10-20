@@ -8,7 +8,7 @@ export default function ReportList({ reports, onVote }) {
     setVoting(reportId);
 
     try {
-      const response = await fetch('http://localhost:3001/api/vote', {
+      const response = await fetch('${API_BASE}/vote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

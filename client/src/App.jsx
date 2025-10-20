@@ -4,6 +4,8 @@ import ReportForm from './components/ReportForm';
 import ReportList from './components/ReportList';
 import Dashboard from './components/Dashboard';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 function App() {
   const [activeTab, setActiveTab] = useState('reports');
   const [reports, setReports] = useState([]);
@@ -17,7 +19,7 @@ function App() {
 
   const fetchReports = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/reports');
+      const response = await fetch('${API_BASE}/reports');
       const data = await response.json();
       if (data.success) {
         setReports(data.reports);
@@ -31,7 +33,7 @@ function App() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/stats');
+      const response = await fetch('${API_BASE}/stats');
       const data = await response.json();
       if (data.success) {
         setStats(data.stats);
