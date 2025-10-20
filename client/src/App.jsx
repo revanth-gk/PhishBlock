@@ -19,11 +19,9 @@ function App() {
 
   const fetchReports = async () => {
     try {
-      const response = await fetch('${API_BASE}/reports');
+      const response = await fetch(`${API_BASE}/reports`);
       const data = await response.json();
-      if (data.success) {
-        setReports(data.reports);
-      }
+      if (data.success) setReports(data.reports);
     } catch (error) {
       console.error('Error fetching reports:', error);
     } finally {
@@ -33,11 +31,9 @@ function App() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('${API_BASE}/stats');
+      const response = await fetch(`${API_BASE}/stats`);
       const data = await response.json();
-      if (data.success) {
-        setStats(data.stats);
-      }
+      if (data.success) setStats(data.stats);
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
@@ -57,34 +53,27 @@ function App() {
               <p className="text-xs text-gray-400">Community Threat Intelligence</p>
             </div>
           </div>
-
           <div className="flex gap-2">
-            <button 
-              onClick={() => setActiveTab('dashboard')} 
+            <button
+              onClick={() => setActiveTab('dashboard')}
               className={`px-4 py-2 rounded-lg transition font-medium ${
-                activeTab === 'dashboard' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-gray-300 hover:bg-gray-700'
+                activeTab === 'dashboard' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700'
               }`}
             >
               📊 Dashboard
             </button>
-            <button 
-              onClick={() => setActiveTab('reports')} 
+            <button
+              onClick={() => setActiveTab('reports')}
               className={`px-4 py-2 rounded-lg transition font-medium ${
-                activeTab === 'reports' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-gray-300 hover:bg-gray-700'
+                activeTab === 'reports' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700'
               }`}
             >
               📋 Reports
             </button>
-            <button 
-              onClick={() => setActiveTab('submit')} 
+            <button
+              onClick={() => setActiveTab('submit')}
               className={`px-4 py-2 rounded-lg transition font-medium ${
-                activeTab === 'submit' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-gray-300 hover:bg-gray-700'
+                activeTab === 'submit' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700'
               }`}
             >
               ➕ Submit
@@ -92,7 +81,6 @@ function App() {
           </div>
         </div>
       </nav>
-
       {/* Main Content */}
       <main className="container mx-auto px-6 py-8">
         {loading && activeTab !== 'submit' ? (
@@ -103,27 +91,26 @@ function App() {
           <>
             {activeTab === 'dashboard' && <Dashboard stats={stats} />}
             {activeTab === 'reports' && (
-              <ReportList 
-                reports={reports} 
+              <ReportList
+                reports={reports}
                 onVote={() => {
                   fetchReports();
                   fetchStats();
-                }} 
+                }}
               />
             )}
             {activeTab === 'submit' && (
-              <ReportForm 
+              <ReportForm
                 onSubmit={() => {
                   fetchReports();
                   fetchStats();
                   setActiveTab('reports');
-                }} 
+                }}
               />
             )}
           </>
         )}
       </main>
-
       {/* Footer */}
       <footer className="bg-gray-800 border-t border-gray-700 mt-12 py-6">
         <div className="container mx-auto px-6 text-center text-gray-400 text-sm">
