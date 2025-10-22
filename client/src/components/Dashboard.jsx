@@ -9,6 +9,9 @@ export default function Dashboard({ stats }) {
     );
   }
 
+  // Extract topReporters and remove it from stats for the general stats display
+  const { topReporters, ...generalStats } = stats;
+
   return (
     <div>
       <h2 className="text-3xl font-bold mb-2">Dashboard</h2>
@@ -16,7 +19,7 @@ export default function Dashboard({ stats }) {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {Object.entries(stats).map(([key, value]) => (
+        {Object.entries(generalStats).map(([key, value]) => (
           <div
             key={key}
             className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-6 border border-gray-700 shadow-xl"
@@ -39,8 +42,8 @@ export default function Dashboard({ stats }) {
         </div>
 
         <div className="space-y-3">
-          {stats.topReporters && stats.topReporters.length > 0 ? (
-            stats.topReporters.map((reporter, idx) => (
+          {topReporters && topReporters.length > 0 ? (
+            topReporters.map((reporter, idx) => (
               <div
                 key={idx}
                 className="flex items-center justify-between p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition"
